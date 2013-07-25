@@ -1,0 +1,94 @@
+// Place all the styles related to the user controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$navbarBackground: #ADB8C9;
+$navbarBackgroundHighlight: #CBCDD1;
+$navbarText: #eee;
+$navbarLinkColor: #eee;
+
+/* mixins, variables, etc. */
+$grayMediumLight: #eaeaea;
+
+@mixin box_sizing {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}  /* this is a sass mixin, kind of like a helper css rules that could be reused */
+
+/* miscellaneous */
+
+.debug_dump {
+	clear: both;
+	float: legt;
+	width: 100%;
+	margin-top: 45px;
+	@include box_sizing;  /* this is how you could call a sass mixin */
+}
+
+@import "bootstrap";
+
+body {padding-top: 90px;}
+
+/*header*/
+
+#logo {
+	float: left;
+	margin-right: 10px;
+	font-size: 1.7em;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: -1px;
+	padding-top: 17px;
+	font-weight: bold;
+	line-height: 1;
+	&:hover {
+		color: #121212;
+		text-decoration: none;
+	}
+}
+
+.navbar-inner {
+	min-height: 60px;
+}
+
+/* feature item */
+
+#feature {
+	margin-top: 100px;
+	border-radius: 5px;
+	padding: 10px;
+	background-color: #EEEEEE;
+}
+
+#signin {
+	margin-top: 50px;
+}
+/* footer */
+
+footer {
+	margin-top: 45px;
+	padding-top: 5px;
+	border-top: 1px solid $grayMediumLight;
+	color: $grayLight;
+	a {
+		color: $gray;
+		&:hover {
+			color: $grayDarker;
+		}
+	}
+	small {
+		float: left;
+	}
+	ul {
+		float: right;
+		list-style: none;
+		li {
+			float: left;
+			margin-left: 10px;
+		}
+	}
+}
+
+@import "bootstrap-responsive";
+

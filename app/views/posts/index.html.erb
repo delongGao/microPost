@@ -1,0 +1,114 @@
+
+
+<div class="row">		
+	<aside class="span3" id="user-panel">
+		<section>
+			<h1>
+				<%= current_user.name %>
+			</h1>
+			<p>
+				<% unless Image.where(user_uid: current_user.uid).empty? || Image.where(user_uid: current_user.uid).last.image_url.blank? %>
+					<% image_url_new = Image.where(user_uid: current_user.uid).last.image_url(:thumb) %>
+					<%= image_tag image_url_new, class: "img-polaroid" %>	
+				<% else %>
+					<%= image_tag current_user.fb_image, class: "img-polaroid", size: "200x200" %>				
+				<% end %>
+			</p>
+			<p>
+				<ul class="nav nav-pills">
+					
+
+					<div class="btn-group">
+					  	<button class="btn">Modify image</button>
+					  	<button class="btn dropdown-toggle" data-toggle="dropdown">
+					    	<span class="caret"></span>
+					  	</button>
+					  	<ul class="dropdown-menu">
+					    	<li>
+					    		<a data-target="#modifyImage" data-toggle="modal">Update</a>
+					    	</li>
+					    	<li>
+								<%= link_to "Reset", image_reset_path %>		    
+							</li>	
+					  	</ul>
+					</div>
+					<div>
+						<%= link_to "Log out", signout_path, class: "btn" %>
+					</div>
+				</ul>
+			</p>
+		</section>
+	</aside>
+
+	<div class="span8">
+		<section>
+			<ul>
+				<% @posts.each do |post| %>
+					<li>
+						<h3><%= post.title %></h3>
+						<p><%= post.content %></p>
+					</li>
+					<hr />
+				<% end %>
+			</ul>
+		</section>
+		
+		<section>
+			<ul class="nav nav-pills">
+				<li class="pull-right">
+					<button data-target="#addPost" type="button" class="btn btn-small" data-toggle="modal">Post to facebook</button>
+				</li>
+			</ul>
+		</section>
+	</div>
+</div>
+
+<!-- post Modal -->
+<div id="addPost" class="modal hide fade">
+	<div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Write and share post to facebook</h3>
+	</div>
+	
+	<div class="modal-body">	
+		<!-- <label for="post_title">Title</label>
+		<input id="post_title" type="text" size="100"/>
+		<label for="post_content">Content</label>
+	    <textarea id="post_content" rows="10" cols="100"></textarea> -->
+			<%= form_for(@post) do |f| %>    
+			    <div class="field">
+			      	<%= f.label :title, "Post title" %>
+			      	<%= f.text_field :title, class: "input-xlarge" %>
+			    </div>
+			    <div class="field">
+			    	<%= f.label :content, "Post content" %>
+			      	<%= f.text_area :content, rows: 5, cols: 40, class: "input-xlarge" %>
+			    </div>
+			    
+	</div>
+	<div class="modal-footer form-actions">
+	    	<button type="button" data-dismiss="modal" class="btn">Close</button>
+	    	<span><%= f.submit :class => "btn btn-primary" %></span>
+	</div>
+			<% end %>
+</div>
+
+<!-- profile image modal -->
+<div id="modifyImage" class="modal hide fade">
+	<div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Modify your profile picture</h3>
+	</div>
+	
+	<div class="modal-body">	
+			<%= form_for @image, :html => {:multipart => true} do |f| %>    
+			    <div class="field">
+			      	<%= f.file_field :image %>
+			    </div>
+	</div>
+	<div class="modal-footer form-actions">
+	    	<button type="button" data-dismiss="modal" class="btn">Close</button>
+	    	<span><%= f.submit "Update image", :class => "btn btn-primary" %></span>
+	</div>
+			<% end %>
+</div>
